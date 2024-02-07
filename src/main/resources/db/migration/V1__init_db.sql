@@ -1,0 +1,25 @@
+CREATE TABLE Client (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(200) NOT NULL,
+    PRIMARY KEY (id),
+    CHECK (LENGTH(name) >= 3 AND LENGTH(name) <= 200)
+);
+
+CREATE TABLE Planet (
+    id VARCHAR(50) NOT NULL,
+    name VARCHAR(500) NOT NULL,
+    PRIMARY KEY (id),
+    CHECK (LENGTH(name) >= 1 AND LENGTH(name) <= 500)
+);
+
+CREATE TABLE Ticket (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    client_id BIGINT NOT NULL,
+    from_planet_id VARCHAR(50) NOT NULL,
+    to_planet_id VARCHAR(50) NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (client_id) REFERENCES Client(id) ON DELETE CASCADE,
+    FOREIGN KEY (from_planet_id) REFERENCES Planet(id) ON DELETE CASCADE,
+    FOREIGN KEY (to_planet_id) REFERENCES Planet(id) ON DELETE CASCADE
+);
